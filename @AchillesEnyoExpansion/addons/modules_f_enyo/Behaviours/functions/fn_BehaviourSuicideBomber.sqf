@@ -51,7 +51,7 @@ if (_object isKindOf "Man") then
 // Sets Vehicle-born IED functionality
 else
 {
-  exitWith {["No unit selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
+  ["No unit selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
 };
 
 #include "\achilles\modules_f_ares\module_footer.hpp"
