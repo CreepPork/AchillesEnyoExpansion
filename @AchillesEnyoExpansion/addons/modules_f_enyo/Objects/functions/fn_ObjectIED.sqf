@@ -25,7 +25,11 @@ if (_object getVariable ["isIED", false]) exitWith {["Object is a IED already!"]
 if (_object getVariable ["isSB", false]) exitWith {["Unit is an Suicide Bomber already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Sets IED functionality
-if (!_object isKindOf "Man") then
+if (_object isKindOf "Man") then
+{
+  ["Units not allowed, use Suicide Bomber module instead!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
+}
+else
 {
   _dialogResult =
   [
@@ -33,8 +37,10 @@ if (!_object isKindOf "Man") then
     [
       ["Explosion Size", ["Small", "Medium", "Large"]],
       ["Explosion Effect", ["Deadly", "Disabling", "Fake", "None"]],
-      ["Disarm Time [s]", "", "30"],
-      ["Activation Distance [m]", "", "10"],
+      ["Disarm Time [s]", "", "10"],
+      ["Activation Type", ["Manual", "Proximity", "Radio"]],
+      ["Is Jammable?", ["Yes", "No"]],
+      ["Activation Distance [m]", "", "25"],
       ["Activation Side", "SIDE"]
     ]
   ] call Ares_fnc_showChooseDialog;
@@ -46,14 +52,13 @@ if (!_object isKindOf "Man") then
 
   _explosionSize = _dialogResult select 0;
   _explosionEffect = _dialogResult select 1;
-  _activationDistance = _dialogResult select 2;
-  _activationSide = _dialogResult select 3;
+  _disarmTime = _dialogResult select 2;
+  _activationType = _dialogResult select 3;
+  _isJammable = _dialogResult select 4;
+  _activationDistance = _dialogResult select 5;
+  _activationSide = _dialogResult select 6;
 
-  [_object, _explosionSize, _explosionEffect, _activationDistance, _activationSide] remoteExec ["Enyo_fnc_createIED", 2, false];
-}
-else
-{
-  ["No object selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
+  [_object, _explosionSize, _explosionEffect, _activationDistance, _activationSide, _activationType, _isJammable, _disarmTime] remoteExec ["Enyo_fnc_createIED", 2, false];
 };
 
 #include "\achilles\modules_f_ares\module_footer.hpp"
