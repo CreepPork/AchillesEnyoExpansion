@@ -13,7 +13,8 @@ class CfgPatches
 		units[] =
 		{
       "Enyo_SuicideBomber_Module",
-			"Enyo_IED_Module"
+			"Enyo_IED_Module",
+			"Enyo_AddECM_Module"
 		};
 
 		requiredAddons[] =
