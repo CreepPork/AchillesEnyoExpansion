@@ -20,7 +20,9 @@ if (isNull _object) exitWith {["No object selected!"] call Ares_fnc_ShowZeusMess
 if (isPlayer _object || isPlayer driver _object) exitWith {["No object selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Displays error message if module has been placed on top of another IED
-if (_object getVariable ["isIED", false]) exitWith {["Object is an IED already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (_object getVariable ["isIED", false]) exitWith {["Object is a IED already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+
+if (_object getVariable ["isSB", false]) exitWith {["Unit is an Suicide Bomber already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Sets IED functionality
 if (!_object isKindOf "Man") then
