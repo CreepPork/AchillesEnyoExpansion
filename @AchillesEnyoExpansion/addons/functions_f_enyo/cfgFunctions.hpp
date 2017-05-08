@@ -10,6 +10,9 @@ class CfgFunctions
 			file = "functions_f_enyo\functions\features";
 
 			class createIED;
+			class IEDHit;
+			class IEDLogic;
+
 			class createSuicideBomber;
 
 			class IEDDeadlyExplosion;
