@@ -113,28 +113,27 @@ while {alive _bomber && _check} do
 		};
 	};
 };
+
 if (alive _bomber) then
 {
 	switch (_explosionEffect) do
-			{
-			   case 0:
-				{
-					[getPos _bomber, _explosionSize] call Enyo_fnc_IEDDeadlyExplosion;
-					_bomber setDamage 1;
-				};
-
-				case 1:
-				{
-				   [getPos _bomber, _explosionSize] call Enyo_fnc_IEDDisablingExplosion;
-					 _bomber setDamage 1;
-				};
-
-				case 2:
-				{
-				   [getPos _bomber] call Enyo_fnc_IEDFakeExplosion;
-					 _bomber setDamage 1;
-				};
-			};
+	{
+		case 0:
+		{
+			[getPos _bomber, _explosionSize] call Enyo_fnc_IEDDeadlyExplosion;
+			_bomber setDamage 1;
+		};
+		case 1:
+		{
+		   [getPos _bomber, _explosionSize] call Enyo_fnc_IEDDisablingExplosion;
+			 _bomber setDamage 1;
+		};
+		case 2:
+		{
+			[getPos _bomber] call Enyo_fnc_IEDFakeExplosion;
+			_bomber setDamage 1;
+		};
+	};
 };
 
 deleteVehicle _dummyObject;
