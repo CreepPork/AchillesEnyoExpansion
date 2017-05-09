@@ -37,9 +37,10 @@ else
     [
       ["Explosion Size", ["Small", "Medium", "Large"]],
       ["Explosion Effect", ["Deadly", "Disabling", "Fake", "None"]],
+      ["Can be Disarmed", ["Yes", "No"]],
       ["Disarm Time [s]", "", "10"],
       ["Activation Type", ["Manual", "Proximity", "Radio"]],
-      ["Is Jammable?", ["Yes", "No"]],
+      ["Is Jammable", ["Yes", "No"]],
       ["Activation Distance [m]", "", "25"],
       ["Activation Side", "SIDE"]
     ]
@@ -52,13 +53,14 @@ else
 
   _explosionSize = _dialogResult select 0;
   _explosionEffect = _dialogResult select 1;
-  _disarmTime = _dialogResult select 2;
-  _activationType = _dialogResult select 3;
-  _isJammable = _dialogResult select 4;
-  _activationDistance = _dialogResult select 5;
-  _activationSide = _dialogResult select 6;
+  _canBeDefused = _this select 2;
+  _disarmTime = _dialogResult select 3;
+  _activationType = _dialogResult select 4;
+  _isJammable = _dialogResult select 5;
+  _activationDistance = _dialogResult select 6;
+  _activationSide = _dialogResult select 7;
 
-  [_object, _explosionSize, _explosionEffect, _activationDistance, _activationSide, _activationType, _isJammable, _disarmTime] remoteExec ["Enyo_fnc_createIED", 2, false];
+  [_object, _explosionSize, _explosionEffect, _activationDistance, _activationSide, _activationType, _isJammable, _disarmTime, _canBeDefused] remoteExec ["Enyo_fnc_createIED", 2, false];
 };
 
 #include "\achilles\modules_f_ares\module_footer.hpp"
