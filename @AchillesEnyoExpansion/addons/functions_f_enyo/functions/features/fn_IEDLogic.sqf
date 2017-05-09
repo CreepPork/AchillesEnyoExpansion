@@ -9,16 +9,23 @@ _activationDistance = _this select 3;
 _activationSide = _this select 4;
 _activationType = _this select 5;
 _isJammable = _this select 6;
+_disarmTime = _this select 7;
+_canBeDefused = _this select 8;
 
 _targets = ["Car", "Tank", "Man"];
 _loop = true;
 _armed = _dummyObject getVariable ["armed", true];
 _triggered = _dummyObject getVariable ["iedTriggered", false];
 _object = _dummyObject getVariable ["object", objNull];
+_defused = _dummyObject getVariable ["defused", false];
 _explode = false;
 _targetSpeed = false;
+_exit = false;
 
 _explosives = ["IEDLandSmall_Remote_Ammo", "IEDLandBig_Remote_Ammo", "IEDUrbanSmall_Remote_Ammo", "IEDUrbanBig_Remote_Ammo"];
+
+// TODO: Why is it returning true on all of them (systemChat), even if there are selected in the menu as no (false)? 
+systemChat str _canBeDefused;
 
 switch (_isJammable) do
 {
@@ -31,6 +38,70 @@ switch (_isJammable) do
 			_isJammable = false;
 		};
 };
+switch (_canBeDefused) do
+{
+    case 0:
+    {
+      _canBeDefused = true;
+    };
+    case 1:
+    {
+      _canBeDefused = false;
+    };
+};
+
+systemChat str _canBeDefused;
+
+if (_canBeDefused) then
+{
+  _execute =
+  {
+    private ["_dummyObject", "_object"];
+    _dummyObject = _this select 0;
+    _object = _this select 1;
+
+    _random = random 100;
+
+    if (_random <= 70) then
+    {
+      hint "IED Disarmed";
+      _dummyObject setVariable["armed", false, true];
+      _dummyObject setVariable["iedTriggered", false, true];
+      _dummyObject setVariable["defused", true, true];
+      _object setVariable["armed", false, true];
+      _object setVariable["iedTriggered", false, true];
+      _object setVariable["defused", true, true];
+      _defused = true;
+    }
+    else
+    {
+      hint "Failed to Disarm";
+      _dummyObject setVariable["iedTriggered", true, true];
+      _dummyObject setVariable["defsued", false, true];
+      _object setVariable["iedTriggered", true, true];
+      _object setVariable["defused", false, true];
+      _defused = false;
+    };
+  };
+
+  [
+    _object,
+    "Disarm",
+    "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+    "_this distance _target < 3",
+    "_caller distance _target < 3",
+    {},
+    {},
+    _execute,
+    {},
+    [_dummyObject, _object],
+    _disarmTime,
+    20,
+    true,
+    false
+  ] remoteExec ["BIS_fnc_holdActionAdd", 0, _object];
+};
 
 // TODO: WHY THE FUCK DOES IT BLOW UP WHEN IT'S DEFUSED?!
 if (_activationType == 0) then
@@ -39,8 +110,26 @@ if (_activationType == 0) then
 	{
 		_triggered = _dummyObject getVariable ["iedTriggered", false];
 		_armed = _dummyObject getVariable ["armed", false];
-		if ((!alive _object && _armed) || (isNull _object && _armed)) then {_triggered = true; _armed = true;};
-		sleep 0.5;
+    _defused = _dummyObject getVariable ["defused", false];
+
+    if ((!alive _object && _armed) || (isNull _object && _armed)) then
+    {
+      if (_defused) then
+      {
+        _exit = true;
+        _armed = false;
+        _triggered = false;
+
+        _dummyObject setVariable ["armed", false, true];
+        _dummyObject setVariable ["iedTriggered", false, true];
+      }
+      else
+      {
+        _dummyObject setVariable ["iedTriggered", true, true];
+        _triggered = true;
+      };
+    };
+		sleep 1;
 	};
 }
 else
@@ -99,6 +188,13 @@ else
 	};
 };
 
+if (_exit) exitWith {
+  _object setVariable ["isIED", false, true];
+  _object setVariable ["armed", false, true];
+  _object setVariable ["iedTriggered", false, true];
+  deleteVehicle _dummyObject;
+};
+
 _armed = _dummyObject getVariable ["armed", false];
 _triggered = _dummyObject getVariable ["iedTriggered", false];
 
@@ -129,7 +225,7 @@ switch (_explosionEffect) do
 	};
 };
 
-if ((_armed && _triggered) || (!alive _object && _armed )) then{
+if ((_armed && _triggered) || (!alive _object && _armed)) then{
 	[_spawnPos, _explosionSize] spawn _explosion;
 	_explode = true;
 };
