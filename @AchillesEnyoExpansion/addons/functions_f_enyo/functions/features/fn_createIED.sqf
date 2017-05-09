@@ -20,6 +20,7 @@ _activationSide = _this select 4;
 _activationType = _this select 5;
 _isJammable = _this select 6;
 _disarmTime = _this select 7;
+_canBeDefused = _this select 8;
 
 _activationDistance = parseNumber _activationDistance;
 _disarmTime = parseNumber _disarmTime;
@@ -48,48 +49,6 @@ _dummyObject setVariable ["disarmTime", _disarmTime, true];
 
 _object setVariable ["dummyObject", _dummyObject, true];
 
-_execute =
-{
-  private ["_dummyObject", "_object"];
-  _dummyObject = _this select 0;
-  _object = _this select 1;
-
-  _random = random 100;
-
-  if (_random <= 70) then
-  {
-    hint "IED Disarmed";
-    _dummyObject setVariable["armed", false, true];
-    _dummyObject setVariable["iedTriggered", false, true];
-    _object setVariable["armed", false, true];
-    _object setVariable["iedTriggered", false, true];
-  }
-  else
-  {
-    hint "Failed to Disarm";
-    _dummyObject setVariable["iedTriggered", true, true];
-    _object setVariable["iedTriggered", true, true];
-  };
-};
-
-[
-  _object,
-  "Disarm",
-  "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
-  "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
-  "_this distance _target < 3",
-  "_caller distance _target < 3",
-  {},
-  {},
-  _execute,
-  {},
-  [_dummyObject, _object],
-  _disarmTime,
-  20,
-  true,
-  false
-] remoteExec ["BIS_fnc_holdActionAdd", 0, _object];
-
-[_dummyObject, _explosionSize, _explosionEffect, _activationDistance, _activationSide, _activationType, _isJammable, _disarmTime] spawn Enyo_fnc_IEDLogic;
+[_dummyObject, _explosionSize, _explosionEffect, _activationDistance, _activationSide, _activationType, _isJammable, _disarmTime, _canBeDefused] spawn Enyo_fnc_IEDLogic;
 
 [_dummyObject, _object];
