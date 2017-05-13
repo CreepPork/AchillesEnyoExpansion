@@ -49,6 +49,238 @@ _dummyObject setVariable ["disarmTime", _disarmTime, true];
 
 _object setVariable ["dummyObject", _dummyObject, true];
 
-[_dummyObject, _explosionSize, _explosionEffect, _activationDistance, _activationSide, _activationType, _isJammable, _disarmTime, _canBeDefused] spawn Enyo_fnc_IEDLogic;
+_targets = ["Car", "Tank", "Man"];
+_loop = true;
+_armed = _dummyObject getVariable ["armed", true];
+_triggered = _dummyObject getVariable ["iedTriggered", false];
+_object = _dummyObject getVariable ["object", objNull];
+_defused = _dummyObject getVariable ["defused", false];
+_explode = false;
+_targetSpeed = false;
+_exit = false;
 
-[_dummyObject, _object];
+_explosives = ["IEDLandSmall_Remote_Ammo", "IEDLandBig_Remote_Ammo", "IEDUrbanSmall_Remote_Ammo", "IEDUrbanBig_Remote_Ammo"];
+
+// TODO: Why is it returning true on all of them (systemChat), even if there are selected in the menu as no (false)?
+systemChat str _canBeDefused;
+
+switch (_isJammable) do
+{
+    case 0:
+		{
+      _isJammable = true;
+    };
+		case 1:
+		{
+			_isJammable = false;
+		};
+};
+switch (_canBeDefused) do
+{
+    case 0:
+    {
+      _canBeDefused = true;
+    };
+    case 1:
+    {
+      _canBeDefused = false;
+    };
+};
+
+systemChat str _canBeDefused;
+
+if (_canBeDefused) then
+{
+  [
+    _object,
+    "Disarm",
+    "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+    "_this distance _target < 3",
+    "_caller distance _target < 3",
+    {},
+    {},
+      {
+        private ["_dummyObject", "_object"];
+        _dummyObject = _this select 0;
+        _object = _this select 1;
+
+        _random = random 100;
+
+        if (_random <= 70) then
+        {
+          hint "IED Disarmed";
+          _dummyObject setVariable["armed", false, true];
+          _dummyObject setVariable["iedTriggered", false, true];
+          _dummyObject setVariable["defused", true, true];
+          _object setVariable["armed", false, true];
+          _object setVariable["iedTriggered", false, true];
+          _object setVariable["defused", true, true];
+          _defused = true;
+        }
+        else
+        {
+          hint "Failed to Disarm";
+          _dummyObject setVariable["iedTriggered", true, true];
+          _dummyObject setVariable["defsued", false, true];
+          _object setVariable["iedTriggered", true, true];
+          _object setVariable["defused", false, true];
+          _defused = false;
+        };
+      },
+    {},
+    [_dummyObject, _object],
+    _disarmTime,
+    20,
+    true,
+    false
+  ] remoteExec ["BIS_fnc_holdActionAdd", 0, _object];
+};
+
+// TODO: WHY THE FUCK DOES IT BLOW UP WHEN IT'S DEFUSED?!
+if (_activationType == 0) then
+{
+	while {!_triggered} do
+	{
+		_triggered = _dummyObject getVariable ["iedTriggered", false];
+		_armed = _dummyObject getVariable ["armed", false];
+    _defused = _dummyObject getVariable ["defused", false];
+
+    if ((!alive _object && _armed) || (isNull _object && _armed)) then
+    {
+      if (_defused) then
+      {
+        _exit = true;
+        _armed = false;
+        _triggered = false;
+
+        _dummyObject setVariable ["armed", false, true];
+        _dummyObject setVariable ["iedTriggered", false, true];
+      }
+      else
+      {
+        _dummyObject setVariable ["iedTriggered", true, true];
+        _triggered = true;
+      };
+    };
+		sleep 1;
+	};
+}
+else
+{
+	while {alive _object && !isNull _object && _loop && _armed && !_triggered} do
+	{
+		sleep 3;
+		_triggered = _dummyObject getVariable ["iedTriggered", false];
+		_armed = _dummyObject getVariable ["armed", true];
+
+		_nearestObjects = (getPos _dummyObject) nearObjects 150;
+
+		if ({side _x in _activationSide} count _nearestObjects > 0) then
+		{
+			while {alive _object && _loop && _armed && !_triggered} do
+			{
+				sleep 1;
+				_nearestTarget  = (getPos _dummyObject) nearObjects (_activationDistance);
+				_nearestSide = [];
+
+				{
+					if (side _x in _activationSide) then
+					{
+						_nearestSide = _nearestSide + [_x]
+					};
+				} forEach _nearestTarget;
+
+				_howMany = count _nearestSide;
+
+				for [{_x = 0}, {_x < _howMany}, {_x = _x + 1}] do
+				{
+					_target = _nearestSide select _x;
+					_isJammableVehicle = _target getVariable ["isECM", false];
+
+					if (_isJammable && _isJammableVehicle && ((_target distance _dummyObject) <= 80)) then
+					{
+							_random = random 100;
+							while {((_target distance _dummyObject) < 80) && (_random > 1)} do
+							{
+								_random = random 100;
+								sleep 2;
+							};
+							if (_random <= 1) exitWith {_loop = false; _dummyObject setVariable ["iedTriggered", true, true];};
+					};
+
+					if (_loop) then
+					{
+						{
+							_targetSpeed = if (_activationType == 2) then {true} else {(speed _target) > 7};
+							if ((_target isKindOf _x) && ((_target distance _dummyObject) <= _activationDistance) && _targetSpeed) exitWith {_loop = false; _dummyObject setVariable ["iedTriggered", true, true]};
+						} forEach _targets;
+					};
+				};
+			};
+		};
+	};
+};
+
+if (_exit) exitWith {
+  _object setVariable ["isIED", false, true];
+  _object setVariable ["armed", false, true];
+  _object setVariable ["iedTriggered", false, true];
+  deleteVehicle _dummyObject;
+};
+
+_armed = _dummyObject getVariable ["armed", false];
+_triggered = _dummyObject getVariable ["iedTriggered", false];
+
+_object setVariable ["armed", _armed, true];
+_object setVariable ["iedTriggered", _triggered, true];
+
+_spawnPos = [((getposATL _object) select 0),((getposATL _object) select 1),(((getPosATL _object) select 2) + 3)];
+
+_explosion = {};
+
+switch (_explosionEffect) do
+{
+	case 0:
+	{
+		_explosion = Enyo_fnc_IEDDeadlyExplosion;
+	};
+	case 1:
+	{
+	   _explosion = Enyo_fnc_IEDDisablingExplosion;
+	};
+	case 2:
+	{
+	   _explosion = Enyo_fnc_IEDFakeExplosion;
+	};
+	case 3:
+	{
+	   _explosion = {};
+	};
+};
+
+if ((_armed && _triggered) || (!alive _object && _armed)) then{
+	[_spawnPos, _explosionSize] spawn _explosion;
+	_explode = true;
+};
+
+if (!_armed) then
+{
+	if (_triggered) then
+	{
+		sleep random 3;
+		[_spawnPos, _explosionSize] spawn _explosion;
+		_explode = true;
+	}
+	else
+	{
+		if (typeOf _object in _explosives) then {deleteVehicle _object};
+	};
+};
+
+_object setVariable ["isIED", false, true];
+_object setVariable ["armed", false, true];
+_object setVariable ["iedTriggered", false, true];
+
+sleep 2;
+deleteVehicle _dummyObject;

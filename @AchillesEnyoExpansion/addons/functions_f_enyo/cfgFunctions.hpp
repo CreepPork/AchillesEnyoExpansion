@@ -11,7 +11,6 @@ class CfgFunctions
 
 			class createIED;
 			class IEDHit;
-			class IEDLogic;
 
 			class createSuicideBomber;
 
