@@ -40,7 +40,9 @@ _spawnDir = getDir _object;
 
 _dummyObject = "Land_HelipadEmpty_F" createVehicle (_spawnPos);
 _dummyObject attachTo [_object,[0,0,0]];
-_dummyObject addEventHandler ["HandleDamage", {_this call Enyo_fnc_IEDHit;0}];
+
+_dummyObject setVariable["activationType", _activationType, true];
+[_object, ["HandleDamage", {_this call Enyo_fnc_IEDHit}]] remoteExec ["addEventHandler", _object];
 
 _dummyObject setVariable ["object", _object, true];
 _dummyObject setVariable ["armed", true, true];
@@ -57,12 +59,8 @@ _object = _dummyObject getVariable ["object", objNull];
 _defused = _dummyObject getVariable ["defused", false];
 _explode = false;
 _targetSpeed = false;
-_exit = false;
 
 _explosives = ["IEDLandSmall_Remote_Ammo", "IEDLandBig_Remote_Ammo", "IEDUrbanSmall_Remote_Ammo", "IEDUrbanBig_Remote_Ammo"];
-
-// TODO: Why is it returning true on all of them (systemChat), even if there are selected in the menu as no (false)?
-systemChat str _canBeDefused;
 
 switch (_isJammable) do
 {
@@ -87,8 +85,6 @@ switch (_canBeDefused) do
     };
 };
 
-systemChat str _canBeDefused;
-
 if (_canBeDefused) then
 {
   [
@@ -102,14 +98,16 @@ if (_canBeDefused) then
     {},
       {
         private ["_dummyObject", "_object"];
-        _dummyObject = _this select 0;
-        _object = _this select 1;
+        _returnArray = _this select 3;
+
+        _dummyObject = _returnArray select 1;
+        _object = _returnArray select 0;
 
         _random = random 100;
 
         if (_random <= 70) then
         {
-          hint "IED Disarmed";
+          systemChat "Disarmed";
           _dummyObject setVariable["armed", false, true];
           _dummyObject setVariable["iedTriggered", false, true];
           _dummyObject setVariable["defused", true, true];
@@ -120,16 +118,18 @@ if (_canBeDefused) then
         }
         else
         {
-          hint "Failed to Disarm";
+          systemChat "Failed to Disarm";
+          _dummyObject setVariable["armed", true, true];
           _dummyObject setVariable["iedTriggered", true, true];
-          _dummyObject setVariable["defsued", false, true];
+          _dummyObject setVariable["defused", false, true];
+          _object setVariable["armed", true, true];
           _object setVariable["iedTriggered", true, true];
           _object setVariable["defused", false, true];
           _defused = false;
         };
       },
     {},
-    [_dummyObject, _object],
+    [_object, _dummyObject],
     _disarmTime,
     20,
     true,
@@ -137,7 +137,6 @@ if (_canBeDefused) then
   ] remoteExec ["BIS_fnc_holdActionAdd", 0, _object];
 };
 
-// TODO: WHY THE FUCK DOES IT BLOW UP WHEN IT'S DEFUSED?!
 if (_activationType == 0) then
 {
 	while {!_triggered} do
@@ -150,12 +149,14 @@ if (_activationType == 0) then
     {
       if (_defused) then
       {
-        _exit = true;
         _armed = false;
         _triggered = false;
 
         _dummyObject setVariable ["armed", false, true];
         _dummyObject setVariable ["iedTriggered", false, true];
+
+        sleep 5;
+        deleteVehicle _dummyObject;
       }
       else
       {
@@ -220,13 +221,6 @@ else
 			};
 		};
 	};
-};
-
-if (_exit) exitWith {
-  _object setVariable ["isIED", false, true];
-  _object setVariable ["armed", false, true];
-  _object setVariable ["iedTriggered", false, true];
-  deleteVehicle _dummyObject;
 };
 
 _armed = _dummyObject getVariable ["armed", false];
