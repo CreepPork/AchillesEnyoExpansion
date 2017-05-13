@@ -41,7 +41,7 @@ else
       ["Disarm Time [s]", "", "10"],
       ["Activation Type", ["Manual", "Proximity", "Radio"]],
       ["Is Jammable", ["Yes", "No"]],
-      ["Activation Distance [m]", "", "25"],
+      ["Activation Distance [m]", "", "10"],
       ["Activation Side", "SIDE"]
     ]
   ] call Ares_fnc_showChooseDialog;
