@@ -53,7 +53,7 @@ else
 
   _explosionSize = _dialogResult select 0;
   _explosionEffect = _dialogResult select 1;
-  _canBeDefused = _this select 2;
+  _canBeDefused = _dialogResult select 2;
   _disarmTime = _dialogResult select 3;
   _activationType = _dialogResult select 4;
   _isJammable = _dialogResult select 5;
