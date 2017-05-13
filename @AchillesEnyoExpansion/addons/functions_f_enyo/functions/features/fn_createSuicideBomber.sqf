@@ -1,15 +1,15 @@
 /*
-	Author: CreepPork_LV, shay_gman
+	Author: CreepPork_LV, shay_gman, Anton Struyk
 
 	Description:
 	Sets a unit to be a suicide bomber.
 
   Parameters:
     _this select: 0 - OBJECT - Person to be a Suicide Bomber
-    _this select: 1 - STRING - Explosion Size
+    _this select: 1 - NUMBER - Explosion Size
     _this select: 2 - NUMBER - Explosion Effect
     _this select: 3 - NUMBER - Activation Side
-		_this select: 4 - STRING - Patrol Distance
+		_this select: 4 - STRING - Patrol Radius
 */
 
 _bomber = _this select 0;

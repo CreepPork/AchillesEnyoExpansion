@@ -2,14 +2,18 @@
 	Author: CreepPork_LV, shay_gman
 
 	Description:
-	 Sets any object as IED.
+	 Sets a object as an IED.
 
   Parameters:
-    _this select: 0 - OBJECT - IED object
-    _this select: 1 - STRING - Explosion Size
+    _this select: 0 - OBJECT - Object that the module was placed upon
+    _this select: 1 - NUMBER - Explosion Size
     _this select: 2 - NUMBER - Explosion Effect
     _this select: 3 - STRING - Activation Distance
     _this select: 4 - NUMBER - Activation Side
+    _this select: 5 - NUMBER - Activation Type
+    _this select: 6 - NUMBER - Can be Jammed
+    _this select: 7 - STRING - Disarm Time
+    _this select: 8 - NUMBER - Can be Disarmed
 */
 
 _object = _this select 0;

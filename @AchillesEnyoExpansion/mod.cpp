@@ -1,6 +1,6 @@
 name = "Achilles - Enyo Expansion";
 picture = "";
-author = "Ares by Anton Struyk, Achilles by Kex, Enyo by CreepPork_LV";
+author = "Ares by Anton Struyk, Achilles by Kex, Enyo by CreepPork_LV, MCC by shay_gman";
 description = "Achilles - Enyo Expansion v0.0.1";
 logo = "";
 logoSmall = "";

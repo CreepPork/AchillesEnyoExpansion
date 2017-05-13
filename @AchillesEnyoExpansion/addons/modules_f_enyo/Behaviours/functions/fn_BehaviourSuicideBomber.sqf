@@ -2,10 +2,10 @@
 	Author: CreepPork_LV, shay_gman
 
 	Description:
-	 Makes a object / unit an IED.
+	 Sets a unit to be an suicide bomber
 
   Parameters:
-    NONE
+    _this select: 0 - OBJECT - Object that the module was placed upon
 */
 
 #include "\achilles\modules_f_ares\module_header.hpp"
@@ -53,7 +53,7 @@ if (_object isKindOf "Man") then
 // Sets Vehicle-born IED functionality
 else
 {
-  ["No unit selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
+  ["Objects not allowed! Use the Create IED module instead!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
 };
 
 #include "\achilles\modules_f_ares\module_footer.hpp"

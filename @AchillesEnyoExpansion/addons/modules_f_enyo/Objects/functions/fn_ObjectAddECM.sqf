@@ -1,3 +1,13 @@
+/*
+	Author: CreepPork_LV
+
+	Description:
+	 Adds a variable to a vehicle that allows the jamming of IEDs
+
+  Parameters:
+    _this select: 0 - OBJECT - Object that the module was placed upon
+*/
+
 #include "\achilles\modules_f_ares\module_header.hpp"
 
 _object = [_logic, false] call Ares_fnc_GetUnitUnderCursor;

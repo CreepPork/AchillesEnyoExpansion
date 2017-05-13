@@ -2,7 +2,7 @@
 	Author: CreepPork_LV, shay_gman
 
 	Description:
-	Creates a Deadly IED explosion.
+	Creates a deadly IED explosion.
 
   Parameters:
     _this select: 0 - ARRAY - Center of explosion

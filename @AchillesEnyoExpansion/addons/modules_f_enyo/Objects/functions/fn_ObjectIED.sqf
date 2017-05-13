@@ -2,10 +2,10 @@
 	Author: CreepPork_LV, shay_gman
 
 	Description:
-	 Makes a object / unit an IED.
+	 Sets a object to be a IED
 
   Parameters:
-    NONE
+    _this select: 0 - OBJECT - Object that the module was placed upon
 */
 
 #include "\achilles\modules_f_ares\module_header.hpp"

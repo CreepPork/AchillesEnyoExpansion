@@ -1,3 +1,14 @@
+/*
+	Author: CreepPork_LV, shay_gman
+
+	Description:
+	 Event Handler logic when the actual object recives damage.
+
+  Parameters:
+    _this select: 0 - OBJECT - Object that the module was placed upon
+    _this select: 4 - STRING - Classname of the projectile that caused inflicted the damage
+*/
+
 _object = _this select 0;
 _projectile = _this select 4;
 _dummyObject = _object getVariable ["dummyObject", objNull];
