@@ -32,6 +32,8 @@ class CfgPatches
 			"achilles_functions_f_achilles",
 			"achilles_data_f_achilles",
 			"achilles_data_f_ares",
+			"enyo_language_f",
+			"enyo_ui_f",
       "enyo_functions_f",
 			"enyo_data_f"
 		};
