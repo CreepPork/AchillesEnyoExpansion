@@ -251,10 +251,6 @@ switch (_explosionEffect) do
 	{
 	   _explosion = Enyo_fnc_IEDFakeExplosion;
 	};
-	case 3:
-	{
-	   _explosion = {};
-	};
 };
 
 if ((_armed && _triggered) || (!alive _object && _armed)) then{
@@ -279,6 +275,8 @@ if (!_armed) then
 _object setVariable ["isIED", false, true];
 _object setVariable ["armed", false, true];
 _object setVariable ["iedTriggered", false, true];
+
+[_object, [_object, 0]] remoteExec ["BIS_fnc_holdActionRemove", 0, _object];
 
 sleep 2;
 deleteVehicle _dummyObject;
