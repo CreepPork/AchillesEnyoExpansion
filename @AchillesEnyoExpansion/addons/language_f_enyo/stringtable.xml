@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Enyo">
+	<Package name="General">
+		<Container name="Project Titles">
+			<Key ID="STR_ACHILLES_ENYO_EXPANSION">
+				<Original>Achilles - Enyo Expansion</Original>
+				<English>Achilles - Enyo Expansion</English>
+			</Key>
+		</Container>
+	</Package>
+	<Package name="Curator Display">
+		<Container name="Dialog Error Messages">
+			<Key ID="STR_ENYO_OBJECT_IS_IED">
+				<Original>Object is an IED already!</Original>
+				<English>Object is an IED already!</English>
+			</Key>
+			<Key ID="STR_ENYO_UNIT_IS_SB">
+				<Original>Unit is an Suicide Bomber already!</Original>
+        <English>Unit is an Suicide Bomber already!</English>
+			</Key>
+			<Key ID="STR_ENYO_OBJECTS_NOT_ALLOWED">
+				<Original>Objects not allowed! Use the Create IED module instead!</Original>
+        <English>Objects not allowed! Use the Create IED module instead!</English>
+			</Key>
+		</Container>
+    <Container name="Dialogs">
+      <Key ID="STR_ENYO_SET_UNIT_AS_SB">
+        <Original>Set Unit as a Suicide Bomber</Original>
+        <English>Set Unit as a Suicide Bomber</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_SIZE">
+        <Original>Explosion Size</Original>
+        <English>Explosion Size</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_SIZE_SMALL">
+        <Original>Small</Original>
+        <English>Small</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_SIZE_MEDIUM">
+        <Original>Medium</Original>
+        <English>Medium</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_SIZE_LARGE">
+        <Original>Large</Original>
+        <English>Large</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_EFFECT">
+        <Original>Explosion Effect</Original>
+        <English>Explosion Effect</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_EFFECT_DEADLY">
+        <Original>Deadly</Original>
+        <English>Deadly</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_EFFECT_DISABLING">
+        <Original>Disabling</Original>
+        <English>Disabling</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_EFFECT_FAKE">
+        <Original>Fake</Original>
+        <English>Fake</English>
+      </Key>
+      <Key ID="STR_ENYO_EXPLOSION_EFFECT_NONE">
+        <Original>None</Original>
+        <English>None</English>
+      </Key>
+      <Key ID="STR_ENYO_ACTIVATION_DISTANCE">
+        <Original>Activation Distance [m]</Original>
+        <English>Activation Distance [m]</English>
+      </Key>
+			<Key ID="STR_ENYO_PATROL_RADIUS">
+        <Original>Patrol Radius [m]</Original>
+        <English>Patrol Radius [m]</English>
+      </Key>
+			<Key ID="STR_ENYO_ACTIVATION_SIDE">
+        <Original>Activation Side</Original>
+        <English>Activation Side</English>
+      </Key>
+    </Container>
+	</Package>
+</Project>
