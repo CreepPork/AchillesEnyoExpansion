@@ -1,5 +1,5 @@
 /*
-	Author: CreepPork_LV, shay_gman, Anton Struyk
+	Author: CreepPork_LV, shay_gman, Anton Struyk, Kex
 
 	Description:
 	Sets a unit to be a suicide bomber.
@@ -17,8 +17,10 @@ _explosionSize = _this select 1;
 _explosionEffect = _this select 2;
 _activationSide = _this select 3;
 _patrolRadius = _this select 4;
+_activationDistance = _this select 5;
 
 _patrolRadius = parseNumber _patrolRadius;
+_activationDistance = parseNumber _activationDistance;
 
 _activationSide = switch (_activationSide) do
 {
@@ -97,6 +99,7 @@ while {alive _bomber && _check} do
 								{
 									sleep 1;
 									_bomber doMove (getPos _enemyUnit);
+									//[_bomber, east] call Enyo_fnc_changeSide;
 									_bomber addRating -10000;
 
 									if (_sound == 1) then
@@ -104,7 +107,7 @@ while {alive _bomber && _check} do
 										[_bomber, format ["suicide%1", (floor random 4)+1]] remoteExec ["say3D", 0, _bomber];
 										_sound = 0;
 									};
-								if ((_bomber distance _enemyUnit) <= 15) exitWith{_check = false;};
+								if ((_bomber distance _enemyUnit) <= _activationDistance) exitWith{_check = false;};
 								};
 						};
 					};
@@ -136,5 +139,9 @@ if (alive _bomber) then
 	};
 };
 
+while {(count (waypoints _bomberGroup)) > 0} do
+{
+	deleteWaypoint ((waypoints _bomberGroup) select 0);
+};
+
 deleteVehicle _dummyObject;
-if (true) exitWith {};
