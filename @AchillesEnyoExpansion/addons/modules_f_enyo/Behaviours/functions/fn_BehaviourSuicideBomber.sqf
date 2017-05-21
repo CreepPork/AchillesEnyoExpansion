@@ -10,17 +10,17 @@
 
 #include "\achilles\modules_f_ares\module_header.hpp"
 
-// Gets Module placed object.
+// Gets the object that the module was placed upon
 _object = [_logic, false] call Ares_fnc_GetUnitUnderCursor;
 
 // Displays error message if no object or unit has been selected.
-if (isNull _object) exitWith {["No unit selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (isNull _object) exitWith {[localize "STR_NO_UNIT_SELECTED"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Displays error message if the module has been placed on top of a player.
-if (isPlayer _object || isPlayer driver _object) exitWith {["No unit selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (isPlayer _object || isPlayer driver _object) exitWith {[localize "STR_NO_UNIT_SELECTED"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Displays error message if module has been placed on top of another IED
-if (_object getVariable ["isIED", false]) exitWith {["Object is a IED already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (_object getVariable ["isIED", false]) exitWith {["Object is an IED already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 if (_object getVariable ["isSB", false]) exitWith {["Unit is an Suicide Bomber already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
@@ -33,8 +33,9 @@ if (_object isKindOf "Man") then
     [
       ["Explosion Size", ["Small", "Medium", "Large"]],
       ["Explosion Effect", ["Deadly", "Disabling", "Fake", "None"]],
-      ["Activation Side", "SIDE"],
-      ["Patrol Radius [m]", "", "100"]
+      ["Activation Distance [m]", "", "10"],
+      ["Patrol Radius [m]", "", "100"],
+      ["Activation Side", "SIDE"]
     ]
   ] call Ares_fnc_showChooseDialog;
 
@@ -45,12 +46,12 @@ if (_object isKindOf "Man") then
 
   _explosionSize = _dialogResult select 0;
   _explosionEffect = _dialogResult select 1;
-  _activationSide = _dialogResult select 2;
+  _activationDistance = _dialogResult select 2;
   _patrolRadius = _dialogResult select 3;
+  _activationSide = _dialogResult select 4;
 
-  [_object, _explosionSize, _explosionEffect, _activationSide, _patrolRadius] remoteExec ["Enyo_fnc_createSuicideBomber", _object, false];
+  [_object, _explosionSize, _explosionEffect, _activationSide, _patrolRadius, _activationDistance] remoteExec ["Enyo_fnc_createSuicideBomber", _object, false];
 }
-// Sets Vehicle-born IED functionality
 else
 {
   ["Objects not allowed! Use the Create IED module instead!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
