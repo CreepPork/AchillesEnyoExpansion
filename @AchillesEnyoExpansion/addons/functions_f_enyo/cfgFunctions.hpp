@@ -18,5 +18,12 @@ class CfgFunctions
 			class IEDDisablingExplosion;
 			class IEDFakeExplosion;
 		};
+
+		class functions_f_common
+		{
+			file = "functions_f_enyo\functions\common";
+
+			class changeSide;
+		};
 	};
 };
