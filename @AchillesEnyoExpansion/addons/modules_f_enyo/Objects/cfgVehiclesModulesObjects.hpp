@@ -1,8 +1,8 @@
 class Enyo_Objects_Module_Base : Enyo_Module_Base
 {
 	category = "Objects";
-	icon = "\achilles\data_f_achilles\icons\icon_object.paa";
-	portrait = "\achilles\data_f_achilles\icons\icon_object.paa";
+	icon = "\enyo\data_f_enyo\icons\icon_object.paa";
+	portrait = "\enyo\data_f_enyo\icons\icon_object.paa";
 };
 
 class Enyo_IED_Module : Enyo_Objects_Module_Base

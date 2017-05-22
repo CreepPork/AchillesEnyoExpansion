@@ -7,7 +7,7 @@ class CfgFunctions
 
 		class functions_f_features
 		{
-			file = "functions_f_enyo\functions\features";
+			file = "\enyo\functions_f_enyo\functions\features";
 
 			class createIED;
 			class IEDHit;
@@ -21,7 +21,7 @@ class CfgFunctions
 
 		class functions_f_common
 		{
-			file = "functions_f_enyo\functions\common";
+			file = "\enyo\functions_f_enyo\functions\common";
 
 			class changeSide;
 		};

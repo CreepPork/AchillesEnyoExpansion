@@ -22,9 +22,9 @@ class CfgVehicles
 		scopeCurator = 1;
 
 		displayName = "Enyo Module Base";
-		icon = "";
-		picture = "";
-		portrait = "";
+		icon = "\enyo\data_f_enyo\icons\icon_enyo.paa";
+		picture = "\enyo\data_f_enyo\icons\icon_enyo.paa";
+		portrait = "\enyo\data_f_enyo\icons\icon_enyo.paa";
 
 		function = "";
 		functionPriority = 1;

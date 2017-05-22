@@ -1,8 +1,8 @@
 class Enyo_Behaviours_Module_Base : Enyo_Module_Base
 {
 	category = "Behaviours";
-	icon = "";
-	portrait = "";
+	icon = "\enyo\data_f_enyo\icons\icon_unit.paa";
+	portrait = "\enyo\data_f_enyo\icons\icon_unit.paa";
 };
 
 class Enyo_SuicideBomber_Module : Enyo_Behaviours_Module_Base
@@ -12,6 +12,4 @@ class Enyo_SuicideBomber_Module : Enyo_Behaviours_Module_Base
 	_generalMacro = "Enyo_SuicideBomber_Module";
 	displayName = "Set Suicide Bomber";
 	function = "Enyo_fnc_BehaviourSuicideBomber";
-	icon = "\achilles\data_f_achilles\icons\icon_unit.paa";
-	portrait = "\achilles\data_f_achilles\icons\icon_unit.paa";
 };

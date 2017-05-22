@@ -4,8 +4,8 @@ class CfgFunctions
   {
     class ui_f_enyo_dialogs
     {
-      file = "ui_f_enyo\functions\dialogs";
+      file = "\enyo\ui_f_enyo\functions\dialogs";
       class RscDisplayAttributes_CreateIED;
     };
-  }
+  };
 };
