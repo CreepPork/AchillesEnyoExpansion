@@ -39,19 +39,15 @@ _activationSide = switch (_activationSide) do
 
 if (typeName _activationSide == typeName sideLogic) then {_activationSide = [_activationSide]};
 
-_spawnPos = getPosATL _object;
-_spawnDir = getDir _object;
-
-_dummyObject = "Land_HelipadEmpty_F" createVehicle (_spawnPos);
+_dummyObject = "Land_HelipadEmpty_F" createVehicle (getPosATL _object);
 _dummyObject attachTo [_object,[0,0,0]];
 
 _dummyObject setVariable["activationType", _activationType, true];
+
 [_object, ["HandleDamage", {_this call Enyo_fnc_IEDHit}]] remoteExec ["addEventHandler", _object];
 
 _dummyObject setVariable ["object", _object, true];
 _dummyObject setVariable ["armed", true, true];
-_dummyObject setVariable ["explode", false, true];
-_dummyObject setVariable ["disarmTime", _disarmTime, true];
 
 _object setVariable ["dummyObject", _dummyObject, true];
 
@@ -63,44 +59,20 @@ _armed = _dummyObject getVariable ["armed", true];
 _triggered = _dummyObject getVariable ["iedTriggered", false];
 _object = _dummyObject getVariable ["object", objNull];
 _defused = _dummyObject getVariable ["defused", false];
-_explode = false;
 _targetSpeed = false;
 
 _explosives = ["IEDLandSmall_Remote_Ammo", "IEDLandBig_Remote_Ammo", "IEDUrbanSmall_Remote_Ammo", "IEDUrbanBig_Remote_Ammo"];
 
-switch (_isJammable) do
-{
-    case 0:
-		{
-      _isJammable = true;
-    };
-		case 1:
-		{
-			_isJammable = false;
-		};
-};
-switch (_canBeDefused) do
-{
-    case 0:
-    {
-      _canBeDefused = true;
-    };
-    case 1:
-    {
-      _canBeDefused = false;
-    };
-};
-
-if (_canBeDefused) then
+if (_canBeDefused == 0) then
 {
 
   _onCompletion =
   {
-    private ["_dummyObject", "_object"];
+    private ["_object", "_dummyObject"];
     _returnArray = _this select 3;
 
-    _dummyObject = _returnArray select 1;
     _object = _returnArray select 0;
+    _dummyObject = _returnArray select 1;
 
     _random = random 100;
 
@@ -110,20 +82,13 @@ if (_canBeDefused) then
       _dummyObject setVariable["armed", false, true];
       _dummyObject setVariable["iedTriggered", false, true];
       _dummyObject setVariable["defused", true, true];
-      _object setVariable["armed", false, true];
-      _object setVariable["iedTriggered", false, true];
-      _object setVariable["defused", true, true];
       _defused = true;
     }
     else
     {
       systemChat "Failed to Disarm";
-      _dummyObject setVariable["armed", true, true];
       _dummyObject setVariable["iedTriggered", true, true];
       _dummyObject setVariable["defused", false, true];
-      _object setVariable["armed", true, true];
-      _object setVariable["iedTriggered", true, true];
-      _object setVariable["defused", false, true];
       _defused = false;
     };
   };
@@ -182,19 +147,14 @@ if (_activationType == 0) then
     {
       if (_defused) then
       {
-        _armed = false;
-        _triggered = false;
-
         _dummyObject setVariable ["armed", false, true];
         _dummyObject setVariable ["iedTriggered", false, true];
 
-        sleep 5;
         deleteVehicle _dummyObject;
       }
       else
       {
         _dummyObject setVariable ["iedTriggered", true, true];
-        _triggered = true;
       };
     };
 		sleep 1;
@@ -232,7 +192,7 @@ else
 					_target = _nearestSide select _x;
 					_isJammableVehicle = _target getVariable ["isECM", false];
 
-					if (_isJammable && _isJammableVehicle && ((_target distance _dummyObject) <= 80)) then
+					if ((_isJammable == 0) && _isJammableVehicle && ((_target distance _dummyObject) <= 80)) then
 					{
 							_random = random 100;
 							while {((_target distance _dummyObject) < 80) && (_random > 1)} do
@@ -282,23 +242,9 @@ switch (_explosionEffect) do
 	};
 };
 
-if ((_armed && _triggered) || (!alive _object && _armed)) then{
-	[_spawnPos, _explosionSize] spawn _explosion;
-	_explode = true;
-};
-
-if (!_armed) then
+if ((_armed && _triggered) || (!alive _object && _armed)) then
 {
-	if (_triggered) then
-	{
-		sleep random 3;
-		[_spawnPos, _explosionSize] spawn _explosion;
-		_explode = true;
-	}
-	else
-	{
-		if (typeOf _object in _explosives) then {deleteVehicle _object};
-	};
+	[_spawnPos, _explosionSize] spawn _explosion;
 };
 
 _object setVariable ["isIED", false, true];
