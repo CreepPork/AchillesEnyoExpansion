@@ -24,7 +24,7 @@ class CfgFunctions
 			file = "\enyo\functions_f_enyo\functions\common";
 
 			class changeSide;
-			class hasACE;
+			class hasACEExplosives;
 		};
 	};
 };

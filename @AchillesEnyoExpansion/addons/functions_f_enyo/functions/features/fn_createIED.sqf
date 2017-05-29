@@ -55,6 +55,8 @@ _dummyObject setVariable ["disarmTime", _disarmTime, true];
 
 _object setVariable ["dummyObject", _dummyObject, true];
 
+_hasACE = call Enyo_fnc_hasACEExplosives;
+
 _targets = ["Car", "Tank", "Man"];
 _loop = true;
 _armed = _dummyObject getVariable ["armed", true];
@@ -91,54 +93,81 @@ switch (_canBeDefused) do
 
 if (_canBeDefused) then
 {
-  [
-    _object,
-    "Disarm",
-    "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
-    "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
-    "_this distance _target < 3",
-    "_caller distance _target < 3",
-    {},
-    {},
-      {
-        private ["_dummyObject", "_object"];
-        _returnArray = _this select 3;
 
-        _dummyObject = _returnArray select 1;
-        _object = _returnArray select 0;
+  _onCompletion =
+  {
+    private ["_dummyObject", "_object"];
+    _returnArray = _this select 3;
 
-        _random = random 100;
+    _dummyObject = _returnArray select 1;
+    _object = _returnArray select 0;
 
-        if (_random <= 70) then
-        {
-          systemChat "Disarmed";
-          _dummyObject setVariable["armed", false, true];
-          _dummyObject setVariable["iedTriggered", false, true];
-          _dummyObject setVariable["defused", true, true];
-          _object setVariable["armed", false, true];
-          _object setVariable["iedTriggered", false, true];
-          _object setVariable["defused", true, true];
-          _defused = true;
-        }
-        else
-        {
-          systemChat "Failed to Disarm";
-          _dummyObject setVariable["armed", true, true];
-          _dummyObject setVariable["iedTriggered", true, true];
-          _dummyObject setVariable["defused", false, true];
-          _object setVariable["armed", true, true];
-          _object setVariable["iedTriggered", true, true];
-          _object setVariable["defused", false, true];
-          _defused = false;
-        };
-      },
-    {},
-    [_object, _dummyObject],
-    _disarmTime,
-    20,
-    true,
-    false
-  ] remoteExec ["BIS_fnc_holdActionAdd", 0, _object];
+    _random = random 100;
+
+    if (_random <= 70) then
+    {
+      systemChat "Disarmed";
+      _dummyObject setVariable["armed", false, true];
+      _dummyObject setVariable["iedTriggered", false, true];
+      _dummyObject setVariable["defused", true, true];
+      _object setVariable["armed", false, true];
+      _object setVariable["iedTriggered", false, true];
+      _object setVariable["defused", true, true];
+      _defused = true;
+    }
+    else
+    {
+      systemChat "Failed to Disarm";
+      _dummyObject setVariable["armed", true, true];
+      _dummyObject setVariable["iedTriggered", true, true];
+      _dummyObject setVariable["defused", false, true];
+      _object setVariable["armed", true, true];
+      _object setVariable["iedTriggered", true, true];
+      _object setVariable["defused", false, true];
+      _defused = false;
+    };
+  };
+
+  if (_hasACE) then
+  {
+    [
+      _object,
+      "Disarm",
+      "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+      "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+      "_this distance _target < 3 && 'ACE_DefusalKit' in (items _this + assignedItems _this)",
+      "_caller distance _target < 3",
+      {},
+      {},
+      _onCompletion,
+      {},
+      [_object, _dummyObject],
+      _disarmTime,
+      20,
+      true,
+      false
+    ] remoteExec ["BIS_fnc_holdActionAdd", 0, _object];
+  }
+  else
+  {
+    [
+      _object,
+      "Disarm",
+      "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+      "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
+      "_this distance _target < 3",
+      "_caller distance _target < 3",
+      {},
+      {},
+      _onCompletion,
+      {},
+      [_object, _dummyObject],
+      _disarmTime,
+      20,
+      true,
+      false
+    ] remoteExec ["BIS_fnc_holdActionAdd", 0, _object];
+  };
 };
 
 if (_activationType == 0) then
@@ -276,7 +305,7 @@ _object setVariable ["isIED", false, true];
 _object setVariable ["armed", false, true];
 _object setVariable ["iedTriggered", false, true];
 
-[_object, [_object, 0]] remoteExec ["BIS_fnc_holdActionRemove", 0, _object];
+[_object, 0] remoteExec ["BIS_fnc_holdActionRemove", 0, _object];
 
 sleep 2;
 deleteVehicle _dummyObject;

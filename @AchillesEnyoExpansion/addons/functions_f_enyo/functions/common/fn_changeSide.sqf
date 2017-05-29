@@ -16,6 +16,7 @@
     _this select: 1 - SIDE - The wanted side
 */
 
+// TODO: make it work with arrays
 _units = _this select 0;
 _side = _this select 1;
 
