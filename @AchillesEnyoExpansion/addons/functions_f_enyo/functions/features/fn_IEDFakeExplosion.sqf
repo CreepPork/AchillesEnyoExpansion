@@ -6,6 +6,9 @@
 
   Parameters:
     _this select: 0 - ARRAY - Spawn position
+
+  Returns:
+    Nothing
 */
 
 _spawnPos = _this select 0;

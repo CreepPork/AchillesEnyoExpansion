@@ -14,6 +14,9 @@
   Parameters:
     _this select: 0 - ARRAY - Array of units that needs the side to be changed
     _this select: 1 - SIDE - The wanted side
+
+  Returns:
+    Nothing
 */
 
 // TODO: make it work with arrays

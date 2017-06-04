@@ -7,6 +7,9 @@
   Parameters:
     _this select: 0 - ARRAY - Spawn position
     _this select: 1 - NUMBER - Explosion Size
+
+  Returns:
+    Nothing
 */
 
 private ["_spawnPos", "_explosionSize","_hitRadius","_killRadius","_targetUnits","_random","_shell","_effect"];

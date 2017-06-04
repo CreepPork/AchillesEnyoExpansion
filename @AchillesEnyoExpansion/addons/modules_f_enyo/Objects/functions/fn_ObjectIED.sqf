@@ -6,6 +6,9 @@
 
   Parameters:
     _this select: 0 - OBJECT - Object that the module was placed upon
+
+  Returns:
+    Nothing
 */
 
 #include "\achilles\modules_f_ares\module_header.hpp"
@@ -14,35 +17,35 @@
 _object = [_logic, false] call Ares_fnc_GetUnitUnderCursor;
 
 // Displays error message if no object or unit has been selected.
-if (isNull _object) exitWith {["No object selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (isNull _object) exitWith {[localize "STR_NO_OBJECT_SELECTED"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Displays error message if the module has been placed on top of a player.
-if (isPlayer _object || isPlayer driver _object) exitWith {["No object selected!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (isPlayer _object || isPlayer driver _object) exitWith {[localize "STR_NO_OBJECT_SELECTED"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Displays error message if module has been placed on top of another IED
-if (_object getVariable ["isIED", false]) exitWith {["Object is a IED already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (_object getVariable ["isIED", false]) exitWith {[localize "STR_ENYO_OBJECT_IS_IED"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
-if (_object getVariable ["isSB", false]) exitWith {["Unit is an Suicide Bomber already!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
+if (_object getVariable ["isSB", false]) exitWith {[localize "STR_ENYO_UNIT_IS_SB"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";};
 
 // Sets IED functionality
 if (_object isKindOf "Man") then
 {
-  ["Units not allowed, use Suicide Bomber module instead!"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
+  [localize "STR_ENYO_UNITS_NOT_ALLOWED"] call Ares_fnc_ShowZeusMessage; playSound "FD_Start_F";
 }
 else
 {
   _dialogResult =
   [
-    "Set Object as IED",
+    localize "STR_ENYO_SET_OBJECT_AS_IED",
     [
-      ["Explosion Size", ["Small", "Medium", "Large"]],
-      ["Explosion Effect", ["Deadly", "Disabling", "Fake", "None"]],
-      ["Can be Disarmed", ["Yes", "No"]],
-      ["Disarm Time [s]", "", "10"],
-      ["Activation Type", ["Manual", "Proximity", "Radio"]],
-      ["Is Jammable", ["Yes", "No"]],
-      ["Activation Distance [m]", "", "10"],
-      ["Activation Side", "SIDE"]
+      [localize "STR_ENYO_EXPLOSION_SIZE", [localize "STR_ENYO_EXPLOSION_SIZE_SMALL", localize "STR_ENYO_EXPLOSION_SIZE_MEDIUM", localize "STR_ENYO_EXPLOSION_SIZE_LARGE"]],
+      [localize "STR_ENYO_EXPLOSION_EFFECT", [localize "STR_ENYO_EXPLOSION_EFFECT_DEADLY", localize "STR_ENYO_EXPLOSION_EFFECT_DISABLING", localize "STR_ENYO_EXPLOSION_EFFECT_FAKE", localize "STR_ENYO_EXPLOSION_EFFECT_NONE"]],
+      [localize "STR_ENYO_CAN_BE_DISARMED", [localize "STR_YES", localize "STR_NO"]],
+      [localize "STR_ENYO_DISARM_TIME", "", "10"],
+      [localize "STR_ENYO_ACTIVATION_TYPE", [localize "STR_ENYO_ACTIVATION_TYPE_MANUAL", localize "STR_ENYO_ACTIVATION_TYPE_PROXIMITY", localize "STR_ENYO_ACTIVATION_TYPE_RADIO"]],
+      [localize "STR_ENYO_IS_JAMMABLE", [localize "STR_YES", localize "STR_NO"]],
+      [localize "STR_ENYO_ACTIVATION_DISTANCE", "", "10"],
+      [localize "STR_ENYO_ACTIVATION_SIDE", "SIDE"]
     ]
   ] call Ares_fnc_showChooseDialog;
 

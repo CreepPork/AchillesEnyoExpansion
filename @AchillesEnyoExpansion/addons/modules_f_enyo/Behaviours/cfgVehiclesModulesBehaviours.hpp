@@ -10,6 +10,6 @@ class Enyo_SuicideBomber_Module : Enyo_Behaviours_Module_Base
 	scopeCurator = 2;
 	curatorCanAttach = 1;
 	_generalMacro = "Enyo_SuicideBomber_Module";
-	displayName = "Set Suicide Bomber";
+	displayName = "$STR_ENYO_SET_SUICIDE_BOMBER";
 	function = "Enyo_fnc_BehaviourSuicideBomber";
 };

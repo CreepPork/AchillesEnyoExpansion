@@ -7,6 +7,9 @@
   Parameters:
     _this select: 0 - ARRAY - Center of explosion
     _this select: 1 - NUMBER - Explosion Size
+
+  Returns:
+    Nothing
 */
 
 _spawnPos = _this select 0;

@@ -21,7 +21,7 @@ class CfgVehicles
 		scope = 1;
 		scopeCurator = 1;
 
-		displayName = "Enyo Module Base";
+		displayName = "$STR_ENYO_MODULE_BASE";
 		icon = "\enyo\data_f_enyo\icons\icon_enyo.paa";
 		picture = "\enyo\data_f_enyo\icons\icon_enyo.paa";
 		portrait = "\enyo\data_f_enyo\icons\icon_enyo.paa";

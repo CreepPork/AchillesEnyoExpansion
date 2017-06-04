@@ -8,7 +8,7 @@
     NONE
 
   Returns:
-    True / False if present
+    BOOL - if present
 */
 
 _hasACE = false;

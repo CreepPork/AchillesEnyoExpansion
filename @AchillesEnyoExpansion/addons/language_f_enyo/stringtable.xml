@@ -1,32 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project name="Enyo">
-	<Package name="General">
-		<Container name="Project Titles">
-			<Key ID="STR_ACHILLES_ENYO_EXPANSION">
-				<Original>Achilles - Enyo Expansion</Original>
-				<English>Achilles - Enyo Expansion</English>
-			</Key>
-		</Container>
-	</Package>
-	<Package name="Curator Display">
-		<Container name="Dialog Error Messages">
-			<Key ID="STR_ENYO_OBJECT_IS_IED">
-				<Original>Object is an IED already!</Original>
-				<English>Object is an IED already!</English>
-			</Key>
-			<Key ID="STR_ENYO_UNIT_IS_SB">
-				<Original>Unit is an Suicide Bomber already!</Original>
+  <Package name="General">
+    <Container name="Project Titles">
+      <Key ID="STR_ACHILLES_ENYO_EXPANSION">
+        <Original>Achilles - Enyo Expansion</Original>
+        <English>Achilles - Enyo Expansion</English>
+      </Key>
+    </Container>
+  </Package>
+  <Package name="Interactions">
+    <Container name="Hold Action">
+      <Key ID="STR_ENYO_DISARM">
+        <Original>Disarm</Original>
+        <English>Disarm</English>
+      </Key>
+    </Container>
+    <Container name="Messages">
+      <Key ID="STR_ENYO_DISARMED">
+        <Original>Disarmed</Original>
+        <English>Disarmed</English>
+      </Key>
+      <Key ID="STR_ENYO_FAILED_TO_DISARM">
+        <Original>Failed to Disarm</Original>
+        <English>Failed to Disarm</English>
+      </Key>
+    </Container>
+  </Package>
+  <Package name="Curator Display">
+    <Container name="Dialog Error Messages">
+      <Key ID="STR_ENYO_OBJECT_IS_IED">
+        <Original>Object is an IED already!</Original>
+        <English>Object is an IED already!</English>
+      </Key>
+      <Key ID="STR_ENYO_UNIT_IS_SB">
+        <Original>Unit is an Suicide Bomber already!</Original>
         <English>Unit is an Suicide Bomber already!</English>
-			</Key>
-			<Key ID="STR_ENYO_OBJECTS_NOT_ALLOWED">
-				<Original>Objects not allowed! Use the Create IED module instead!</Original>
+      </Key>
+      <Key ID="STR_ENYO_OBJECTS_NOT_ALLOWED">
+        <Original>Objects not allowed! Use the Create IED module instead!</Original>
         <English>Objects not allowed! Use the Create IED module instead!</English>
-			</Key>
-		</Container>
+      </Key>
+      <Key ID="STR_ENYO_UNITS_NOT_ALLOWED">
+        <Original>Units not allowed, use Suicide Bomber module instead!</Original>
+        <English>Units not allowed, use Suicide Bomber module instead!</English>
+      </Key>
+      <Key ID="STR_ENYO_NO_VEHICLE_SELECTED">
+        <Original>No vehicle selected!</Original>
+        <English>No vehicle selected!</English>
+      </Key>
+      <Key ID="STR_ENYO_VEHICLE_HAS_ECM">
+        <Original>Vehicle has a ECM already!</Original>
+        <English>Vehicle has a ECM already!</English>
+      </Key>
+      <Key ID="STR_ENYO_ACTIVATION_SIDE_CANNOT_MATCH">
+        <Original>Activation Side cannot match the unit's side!</Original>
+        <English>Activation Side cannot match the unit's side!</English>
+      </Key>
+    </Container>
     <Container name="Dialogs">
       <Key ID="STR_ENYO_SET_UNIT_AS_SB">
-        <Original>Set Unit as a Suicide Bomber</Original>
-        <English>Set Unit as a Suicide Bomber</English>
+        <Original>Set Unit as an Suicide Bomber</Original>
+        <English>Set Unit as an Suicide Bomber</English>
       </Key>
       <Key ID="STR_ENYO_EXPLOSION_SIZE">
         <Original>Explosion Size</Original>
@@ -68,14 +102,70 @@
         <Original>Activation Distance [m]</Original>
         <English>Activation Distance [m]</English>
       </Key>
-			<Key ID="STR_ENYO_PATROL_RADIUS">
+      <Key ID="STR_ENYO_PATROL_RADIUS">
         <Original>Patrol Radius [m]</Original>
         <English>Patrol Radius [m]</English>
       </Key>
-			<Key ID="STR_ENYO_ACTIVATION_SIDE">
+      <Key ID="STR_ENYO_ACTIVATION_SIDE">
         <Original>Activation Side</Original>
         <English>Activation Side</English>
       </Key>
+      <Key ID="STR_ENYO_ADD_ECM_TO_VEHICLE">
+        <Original>Add ECM to Vehicle</Original>
+        <English>Add ECM to Vehicle</English>
+      </Key>
+      <Key ID="STR_ENYO_ADD_ECM">
+        <Original>Add ECM</Original>
+        <English>Add ECM</English>
+      </Key>
+      <Key ID="STR_ENYO_SET_OBJECT_AS_IED">
+        <Original>Set Object as IED</Original>
+        <English>Set Object as IED</English>
+      </Key>
+      <Key ID="STR_ENYO_CAN_BE_DISARMED">
+        <Original>Can be Disarmed</Original>
+        <English>Can be Disarmed</English>
+      </Key>
+      <Key ID="STR_ENYO_DISARM_TIME">
+        <Original>Disarm Time [s]</Original>
+        <English>Disarm Time [s]</English>
+      </Key>
+      <Key ID="STR_ENYO_ACTIVATION_TYPE">
+        <Original>Activation Type</Original>
+        <English>Activation Type</English>
+      </Key>
+      <Key ID="STR_ENYO_ACTIVATION_TYPE_MANUAL">
+        <Original>Manual</Original>
+        <English>Manual</English>
+      </Key>
+      <Key ID="STR_ENYO_ACTIVATION_TYPE_PROXIMITY">
+        <Original>Proximity</Original>
+        <English>Proximity</English>
+      </Key>
+      <Key ID="STR_ENYO_ACTIVATION_TYPE_RADIO">
+        <Original>Radio</Original>
+        <English>Radio</English>
+      </Key>
+      <Key ID="STR_ENYO_IS_JAMMABLE">
+        <Original>Is Jammable</Original>
+        <English>Is Jammable</English>
+      </Key>
     </Container>
-	</Package>
+  </Package>
+  <Package name="Module Names">
+    <Container name="Modules">
+      <Key ID="STR_ENYO_MODULE_BASE">
+        <Original>Enyo Module Base</Original>
+        <English>Enyo Module Base</English>
+      </Key>
+      <Key ID="STR_ENYO_SET_SUICIDE_BOMBER">
+        <Original>Set Suicide Bomber</Original>
+        <English>Set Suicide Bomber</English>
+      </Key>
+      <Key ID="STR_ENYO_CREATE_IED">
+        <Original>Create IED</Original>
+        <English>Create IED</English>
+      </Key>
+    </Container>
+  </Package>
 </Project>

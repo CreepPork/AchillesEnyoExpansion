@@ -14,6 +14,9 @@
     _this select: 6 - NUMBER - Can be Jammed
     _this select: 7 - STRING - Disarm Time
     _this select: 8 - NUMBER - Can be Disarmed
+
+  Returns:
+    Nothing
 */
 
 _object = _this select 0;
@@ -51,7 +54,7 @@ _dummyObject setVariable ["armed", true, true];
 
 _object setVariable ["dummyObject", _dummyObject, true];
 
-_hasACE = call Enyo_fnc_hasACEExplosives;
+_hasACEExplosives = call Enyo_fnc_hasACEExplosives;
 
 _targets = ["Car", "Tank", "Man"];
 _loop = true;
@@ -65,7 +68,6 @@ _explosives = ["IEDLandSmall_Remote_Ammo", "IEDLandBig_Remote_Ammo", "IEDUrbanSm
 
 if (_canBeDefused == 0) then
 {
-
   _onCompletion =
   {
     private ["_object", "_dummyObject"];
@@ -78,7 +80,7 @@ if (_canBeDefused == 0) then
 
     if (_random <= 70) then
     {
-      systemChat "Disarmed";
+      systemChat localize "STR_ENYO_DISARMED";
       _dummyObject setVariable["armed", false, true];
       _dummyObject setVariable["iedTriggered", false, true];
       _dummyObject setVariable["defused", true, true];
@@ -86,18 +88,18 @@ if (_canBeDefused == 0) then
     }
     else
     {
-      systemChat "Failed to Disarm";
+      systemChat localize "STR_ENYO_FAILED_TO_DISARM";
       _dummyObject setVariable["iedTriggered", true, true];
       _dummyObject setVariable["defused", false, true];
       _defused = false;
     };
   };
 
-  if (_hasACE) then
+  if (_hasACEExplosives) then
   {
     [
       _object,
-      "Disarm",
+      localize "STR_ENYO_DISARM",
       "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
       "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
       "_this distance _target < 3 && 'ACE_DefusalKit' in (items _this + assignedItems _this)",
@@ -117,7 +119,7 @@ if (_canBeDefused == 0) then
   {
     [
       _object,
-      "Disarm",
+      localize "STR_ENYO_DISARM",
       "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
       "\a3\ui_f\data\IGUI\Cfg\holdactions\holdAction_unbind_ca.paa",
       "_this distance _target < 3",

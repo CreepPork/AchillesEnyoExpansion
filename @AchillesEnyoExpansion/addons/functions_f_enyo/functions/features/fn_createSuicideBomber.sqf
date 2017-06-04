@@ -8,8 +8,11 @@
     _this select: 0 - OBJECT - Person to be a Suicide Bomber
     _this select: 1 - NUMBER - Explosion Size
     _this select: 2 - NUMBER - Explosion Effect
-    _this select: 3 - NUMBER - Activation Side
+    _this select: 3 - [SIDE] - Activation Side
 		_this select: 4 - STRING - Patrol Radius
+
+	Returns:
+		Nothing
 */
 
 _bomber = _this select 0;
@@ -21,15 +24,6 @@ _activationDistance = _this select 5;
 
 _patrolRadius = parseNumber _patrolRadius;
 _activationDistance = parseNumber _activationDistance;
-
-_activationSide = switch (_activationSide) do
-{
-	case 1:	{[east]};
-	case 2:	{[west]};
-	case 3:	{[resistance]};
-	default {[west]};
-};
-
 
 if (typeName _activationSide == typeName sideLogic) then {_activationSide = [_activationSide]};
 

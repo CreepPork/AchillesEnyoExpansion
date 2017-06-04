@@ -7,6 +7,9 @@
   Parameters:
     _this select: 0 - OBJECT - Object that the module was placed upon
     _this select: 4 - STRING - Classname of the projectile that caused inflicted the damage
+
+  Returns:
+    Nothing
 */
 
 _object = _this select 0;
@@ -16,12 +19,12 @@ _activationType = _dummyObject getVariable["activationType", 0];
 
 _explosives =
 [
-"ClaymoreDirectionalMine_Remote_Ammo",
-"DemoCharge_Remote_Ammo",
-"SatchelCharge_Remote_Ammo",
-"pipebombExplosion",
-"PipeBomb",
-"ACE_DummyAmmo_Explosives"
+  "ClaymoreDirectionalMine_Remote_Ammo",
+  "DemoCharge_Remote_Ammo",
+  "SatchelCharge_Remote_Ammo",
+  "pipebombExplosion",
+  "PipeBomb",
+  "ACE_DummyAmmo_Explosives"
 ];
 
 if (_projectile in _explosives) then
