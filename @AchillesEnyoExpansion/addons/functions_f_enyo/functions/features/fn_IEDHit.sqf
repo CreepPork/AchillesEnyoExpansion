@@ -4,6 +4,9 @@
 	Description:
 	 Event Handler logic when the actual object recives damage.
 
+  Notes:
+    This event handler works only for vehicles not static objects (that's just how HandleDamage works).
+
   Parameters:
     _this select: 0 - OBJECT - Object that the module was placed upon
     _this select: 4 - STRING - Classname of the projectile that caused inflicted the damage
